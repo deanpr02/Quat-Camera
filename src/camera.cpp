@@ -25,6 +25,10 @@ Camera::Camera()
 /*
 This camera takes the current direction vector and multiplies by a certain velocity and then adds it to
 the cameras current position so it moves in an accurate direction
+Args:
+    direction -> direction in which the camera is moving
+    delta_time -> time elapsed between current frame and the last frame
+    
 */
 void Camera::moveCamera(Camera_Movement direction, float delta_time)
 {
@@ -51,6 +55,11 @@ void Camera::moveCamera(Camera_Movement direction, float delta_time)
 
 /*
 Adds our offsets to our cameras total horizontal/vertical movement then rotates using those offsets
+
+Args:
+    xoffset -> horizontal distance of last mouse position to current mouse position
+    yoffset -> vertical distance of last mouse position to current mouse position
+    constrainPitch -> if player should be able to look for than 90 degrees vertically
 */
 void Camera::processMouseMovement(float xoffset, float yoffset, bool constrainPitch=true){
     xoffset *= mouse_sensitivity;
@@ -88,7 +97,6 @@ void Camera::rotateCamera(){
 
     //combination of horizontal and vertical rotation quaternions
     qtn::Quaternion cam_rotation = (h_rotation*v_rotation).normalize();
-    
     direction = cam_rotation*forward*cam_rotation.conjugate();
     direction = direction.normalize();
     
